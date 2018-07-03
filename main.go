@@ -4,12 +4,18 @@ import (
   "net/http"
   "fmt"
   "io/ioutil"
+  "os"
 )
 
+var host string = ""
+var port string = ""
+
 func handler(w http.ResponseWriter, r *http.Request) {
-    resp, err := http.Get("http://ipv4.icanhazip.com")
+    target := fmt.Sprintf("http://%s:%s", host, port)
+    resp, err := http.Get(target)
     if err != nil {
         fmt.Fprintln(w, "Error fetching IP...")
+	fmt.Fprintln(w, err)
 	return
     }
 
@@ -23,6 +29,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+    host = os.Getenv("EXTERNAL_WHATISMYIP_SERVICE_HOST")
+    port = os.Getenv("EXTERNAL_WHATISMYIP_SERVICE_PORT")
+    fmt.Println(host)
+    fmt.Println(port)
+    if host == "" || port == "" {
+        fmt.Println("EXTERNAL_WHATISMYIP_SERVICE_[HOST|PORT] environment variable not set. Exiting")
+        return
+    }
     http.HandleFunc("/", handler)
     http.ListenAndServe(":8080", nil)
 }
