@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  creationTimestamp: null
+  generation: 1
+  name: icanhazip-go
+spec:
+  lookupPolicy:
+    local: false

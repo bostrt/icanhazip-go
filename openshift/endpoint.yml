@@ -1,0 +1,14 @@
+kind: "Endpoints"
+apiVersion: "v1"
+metadata:
+  name: "external-whatismyip" 
+subsets: 
+  -
+    addresses:
+      -
+        ip: "69.162.69.148" 
+    ports:
+      -
+        port: 80
+        name: "icanhazip"
+

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: icanhazip-go
+  name: icanhazip-go
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: icanhazip-go:latest
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/bostrt/icanhazip-go.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: golang:onbuild
+    type: Docker
+
